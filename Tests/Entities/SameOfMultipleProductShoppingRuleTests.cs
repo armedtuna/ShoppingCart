@@ -19,8 +19,21 @@ public class SameOfMultipleProductShoppingRuleTests
         new SameOfMultipleProductShoppingRule("b", 2, 45),
     ];
 
+    [TestCase(new string[] { }, 0)]
+    [TestCase(new[] { "a" }, 50)]
+    [TestCase(new[] { "a", "a" }, 100)]
+    [TestCase(new[] { "a", "a", "a" }, 130)]
+    [TestCase(new[] { "a", "a", "a", "a" }, 180)]
+    [TestCase(new[] { "b" }, 30)]
+    [TestCase(new[] { "b", "b" }, 45)]
+    [TestCase(new[] { "b", "b", "b" }, 75)]
+    [TestCase(new[] { "a", "a", "a", "a", "a", "a", "b", "b", "b", "b" }, 350)]
+    [TestCase(new[] { "a", "a", "a", "a", "a", "a", "b", "b", "b", "b", "a", "b" }, 430)]
     [TestCase(new[] { "a", "b", "c", "d" }, 115)]
     [TestCase(new[] { "a", "b", "a", "c", "a", "d" }, 195)]
+    [TestCase(new[] { "c", "d" }, 35)]
+    [TestCase(new[] { "c", "d", "c", "d" }, 70)]
+    [TestCase(new[] { "c", "d", "c", "d", "c", "d" }, 105)]
     public void NoShoppingRulesApply(string[] skus, float expectedTotalPrice)
     {
         Cart cart = new Cart(_shoppingRules);
