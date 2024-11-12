@@ -5,9 +5,9 @@ namespace ShoppingCart.Data;
 
 public class ExampleCart
 {
-    public static Cart Build()
+    public static Checkout Build()
     {
         IShoppingRule[] shoppingRules = ExampleShoppingRules.Build();
-        return new Cart(shoppingRules);
+        return new Checkout(shoppingRules);
     }
 }

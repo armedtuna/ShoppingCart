@@ -40,8 +40,8 @@ void SetUpRoutes(WebApplication webApplication)
     const string webRoot = "/shoppingcart";
 
     webApplication.MapGet($"{webRoot}/cart",
-            Cart () =>
-                CartModel.Instance.GetCart())
+            Checkout () =>
+                CheckoutModel.Instance.GetCart())
         .WithName("GetCart")
         .WithOpenApi();
 
@@ -53,7 +53,7 @@ void SetUpRoutes(WebApplication webApplication)
 
     webApplication.MapPost($"{webRoot}/addtocart",
         void (Product product) =>
-            CartModel.Instance.AddProduct(product))
+            CheckoutModel.Instance.AddProduct(product))
         .WithName("PostAddProductToCart")
         .WithOpenApi();
 }

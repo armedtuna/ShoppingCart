@@ -3,7 +3,7 @@ using ShoppingCart.Entities.ShoppingRules;
 namespace ShoppingCart.Entities;
 
 // todo-at: validation? for example if user is allowed to manually enter the quantity. also where would stock levels be checked?
-public class Cart(IEnumerable<IShoppingRule>? shoppingRules)
+public class Checkout(IEnumerable<IShoppingRule>? shoppingRules)
 {
     // todo-at: should these properties be exposed, perhaps for reporting purposes? out-of-scope? different objects for that?
     public List<Product> Products { get; } = [];
@@ -13,7 +13,7 @@ public class Cart(IEnumerable<IShoppingRule>? shoppingRules)
 
     public float TotalPrice { get; private set; } = 0;
 
-    public void AddProduct(Product product)
+    public void Scan(Product product)
     {
         // todo-at: future improvement don't re-use the existing product, but create a new one and replace it where
         // necessary when changing the special price.

@@ -7,10 +7,10 @@ public class SameOfMultipleProductShoppingRuleTests
 {
     private readonly Product[] _products =
     [
-        new Product("a", 50),
-        new Product("b", 30),
-        new Product("c", 20),
-        new Product("d", 15)
+        new("a", 50),
+        new("b", 30),
+        new("c", 20),
+        new("d", 15)
     ];
 
     private readonly IShoppingRule[] _shoppingRules =
@@ -21,29 +21,63 @@ public class SameOfMultipleProductShoppingRuleTests
 
     [TestCase("", 0)]
     [TestCase("a", 50)]
+    [TestCase("ab", 80)]
+    [TestCase("cdba", 115)]
+
     [TestCase("aa", 100)]
     [TestCase("aaa", 130)]
     [TestCase("aaaa", 180)]
-    [TestCase("b", 30)]
-    [TestCase("bb", 45)]
-    [TestCase("bbb", 75)]
-    [TestCase("aaaaaabbbb", 350)]
-    [TestCase("aaaaaabbbbab", 430)]
-    [TestCase("abcd", 115)]
-    [TestCase("abacad", 195)]
-    [TestCase("cd", 35)]
-    [TestCase("cdcd", 70)]
-    [TestCase("cdcdcd", 105)]
-    public void NoShoppingRulesApply(string skus, float expectedTotalPrice)
+    [TestCase("aaaaa", 230)]
+    [TestCase("aaaaaa", 260)]
+
+    [TestCase("aaab", 160)]
+    [TestCase("aaabb", 175)]
+    [TestCase("aaabbd", 190)]
+    [TestCase("dababa", 190)]
+    // todo-at: test requests are a little different -- consider if needs changing:
+    // - price is before skus
+    // - skus are capitalized
+    public void TestTotals(string skus, float expectedTotalPrice)
     {
-        Cart cart = new Cart(_shoppingRules);
+        Checkout checkout = new Checkout(_shoppingRules);
         foreach (char sku in skus)
         {
-            Product matchingProduct = _products.First(p => p.Sku == sku.ToString());
-            cart.AddProduct(matchingProduct);
+            Product matchingProduct = GetProduct(sku);
+            checkout.Scan(matchingProduct);
         }
         
-        Assert.That(cart.Products.Count, Is.EqualTo(skus.Length));
-        Assert.That(cart.TotalPrice, Is.EqualTo(expectedTotalPrice));
+        Assert.That(checkout.Products.Count, Is.EqualTo(skus.Length));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(expectedTotalPrice));
     }
+
+    [Test]
+    public void TestIncremental()
+    {
+        Checkout checkout = new Checkout(_shoppingRules);
+        Assert.That(checkout.Products.Count, Is.EqualTo(0));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(0));
+
+        checkout.Scan(GetProduct('a'));
+        Assert.That(checkout.Products.Count, Is.EqualTo(1));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(50));
+
+        checkout.Scan(GetProduct('b'));
+        Assert.That(checkout.Products.Count, Is.EqualTo(2));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(80));
+
+        checkout.Scan(GetProduct('a'));
+        Assert.That(checkout.Products.Count, Is.EqualTo(3));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(130));
+
+        checkout.Scan(GetProduct('a'));
+        Assert.That(checkout.Products.Count, Is.EqualTo(4));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(160));
+
+        checkout.Scan(GetProduct('b'));
+        Assert.That(checkout.Products.Count, Is.EqualTo(5));
+        Assert.That(checkout.TotalPrice, Is.EqualTo(175));
+    }
+    
+    private Product GetProduct(char sku) =>
+        _products.First(p => p.Sku == sku.ToString());
 }
