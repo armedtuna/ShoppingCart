@@ -11,7 +11,6 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, float s
     // for the moment, assume that all rules can apply to a product more than once
     private bool Inclusive { get; set; } = true;
 
-    // todo-at: tests
     public bool CalculateSpecialPrice(IEnumerable<Product> products)
     {
         Product[] matchingProducts = products
@@ -55,28 +54,4 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, float s
 
         return true;
     }
-
-    // public (bool, float) CalculatePrice(IEnumerable<Product> products)
-    // {
-    //     Product[] matchingProducts = products.Where(p => p.Sku == Sku)
-    //         .ToArray();
-    //
-    //     if (matchingProducts.Length == 0)
-    //     {
-    //         return (false, 0);
-    //     }
-    //     
-    //     float matchesPrice = 0;
-    //     float remainderPrice = 0;
-    //     // todo-at: need to cater for multiples, for example with rule for 3 of sku
-    //     // - 2 matches: no match
-    //     // - 3, or 4 matches: offer x 1
-    //     // - 6, or 8 matches: offer x 2
-    //     int matches = matchingProducts.Length / Quantity;
-    //     matchesPrice = matches * SpecialPrice;
-    //     float productPrice = matchingProducts.First().UnitPrice;
-    //     remainderPrice = (matchingProducts.Length - matches) * productPrice;
-    //
-    //     return (true, matchesPrice + remainderPrice);
-    // }
 }

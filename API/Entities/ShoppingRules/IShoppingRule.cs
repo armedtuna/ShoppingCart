@@ -15,6 +15,4 @@ namespace ShoppingCart.Entities.ShoppingRules;
 public interface IShoppingRule
 {
     bool CalculateSpecialPrice(IEnumerable<Product> products);
-    
-    //(bool, float) CalculatePrice(IEnumerable<Product> products);
 }
