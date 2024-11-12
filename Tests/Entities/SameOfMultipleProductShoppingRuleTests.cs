@@ -36,11 +36,11 @@ public class SameOfMultipleProductShoppingRuleTests
     [TestCase("aaabbd", 190)]
     [TestCase("dababa", 190)]
     // todo-at: test requests are a little different -- consider if needs changing:
-    // - price is before skus
+    // - price parameter is before skus parameter
     // - skus are capitalized
-    public void TestTotals(string skus, float expectedTotalPrice)
+    public void TestTotals(string skus, decimal expectedTotalPrice)
     {
-        Checkout checkout = new Checkout(_shoppingRules);
+        Checkout checkout = new(_shoppingRules);
         foreach (char sku in skus)
         {
             Product matchingProduct = GetProduct(sku);

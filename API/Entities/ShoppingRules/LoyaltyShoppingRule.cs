@@ -20,14 +20,16 @@ public class LoyaltyShoppingRule(string[] skus, byte percentageDiscount) : IShop
         foreach (Product product in matchingProducts)
         {
             string name = GetType().ToString();
-            // this isn't the best to ensure that a percentage discount isn't applied multiple times.
+            // this isn't the best way to ensure that a percentage discount isn't applied multiple times.
             if (product.SpecialPrice.HasValue && product.SpecialPriceName != name)
             {
-                product.SpecialPrice -= product.SpecialPrice.Value * PercentageDiscount / 100;
+                decimal discount = product.SpecialPrice.Value * PercentageDiscount / 100;
+                product.SpecialPrice -= (decimal)discount;
             }
             else
             {
-                product.SpecialPrice = product.UnitPrice - product.UnitPrice * PercentageDiscount / 100;
+                decimal price = product.UnitPrice - product.UnitPrice * PercentageDiscount / 100;
+                product.SpecialPrice = (decimal)price;
             }
 
             product.SpecialPriceName = name;

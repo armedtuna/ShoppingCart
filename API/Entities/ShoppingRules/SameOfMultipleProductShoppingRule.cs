@@ -1,12 +1,12 @@
 namespace ShoppingCart.Entities.ShoppingRules;
 
-public class SameOfMultipleProductShoppingRule(string sku, int quantity, float specialPrice) : IShoppingRule
+public class SameOfMultipleProductShoppingRule(string sku, int quantity, decimal specialPrice) : IShoppingRule
 {
     private string Sku { get; set; } = sku;
 
     private int Quantity { get; set; } = quantity;
 
-    private float SpecialPrice { get; set; } = specialPrice;
+    private decimal SpecialPrice { get; set; } = specialPrice;
 
     // for the moment, assume that all rules can apply to a product more than once
     private bool Inclusive { get; set; } = true;
@@ -14,8 +14,8 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, float s
     public bool CalculateSpecialPrice(IEnumerable<Product> products)
     {
         Product[] matchingProducts = products
-            .Where(p => p.Sku == Sku &&
-                        !p.SpecialPrice.HasValue)
+            .Where(p => p.Sku == Sku /*&&
+                        !p.SpecialPrice.HasValue*/)
             .ToArray();
 
         if (matchingProducts.Length == 0)
@@ -35,10 +35,10 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, float s
         for (int i = 0; i < quantityToAdjust; i++)
         {
             Product matchingProduct = matchingProducts[i];
-            if (SpecialPrice > matchingProduct.SpecialPrice)
-            {
-                continue;
-            }
+            // if (SpecialPrice > matchingProduct.SpecialPrice)
+            // {
+            //     continue;
+            // }
 
             matchingProduct.SpecialPriceName = GetType().ToString(); // todo-at: replace or append?
             if (i % Quantity == 0)

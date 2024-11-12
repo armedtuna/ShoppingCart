@@ -11,18 +11,16 @@ public class Checkout(IEnumerable<IShoppingRule>? shoppingRules)
     // todo-at: could rules depend on who the cart belongs to? for example a customer with / without a loyalty card?
     public IShoppingRule[] ShoppingRules { get; } = shoppingRules?.ToArray() ?? [];
 
-    public float TotalPrice { get; private set; } = 0;
+    public decimal TotalPrice { get; private set; } = 0;
 
     public void Scan(Product product)
     {
-        // todo-at: future improvement don't re-use the existing product, but create a new one and replace it where
-        // necessary when changing the special price.
-        // since the special price is adjusted by the rule, the object instances have to be unique.
+        // don't re-use the existing product, but create a new one since the special price is adjusted by the rule
+        // on the product, and the object instances have to be unique.
         Product productCopy = product.Clone();
         Products.Add(productCopy);
-        foreach (var rule in ShoppingRules)
+        foreach (IShoppingRule rule in ShoppingRules)
         {
-            //(bool ruleApplied, float rulePrice) = rule.CalculatePrice(Products);
             bool ruleIsSatisfied = rule.CalculateSpecialPrice(Products);
         }
         
@@ -31,7 +29,7 @@ public class Checkout(IEnumerable<IShoppingRule>? shoppingRules)
 
     private void CalculateTotalPrice()
     {
-        float totalPrice = 0;
+        decimal totalPrice = 0;
         foreach (Product product in Products)
         {
             if (product.SpecialPrice.HasValue)
@@ -44,6 +42,6 @@ public class Checkout(IEnumerable<IShoppingRule>? shoppingRules)
             }
         }
         
-        TotalPrice = totalPrice;
+        TotalPrice = decimal.Round(totalPrice, 2);
     }
 }

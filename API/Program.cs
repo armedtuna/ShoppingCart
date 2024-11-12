@@ -35,6 +35,7 @@ SetUpRoutes(app);
 app.Run();
 return;
 
+// todo-at: rip out the loyalty rule bit and leave that on another branch
 void SetUpRoutes(WebApplication webApplication)
 {
     const string webRoot = "/shoppingcart";
