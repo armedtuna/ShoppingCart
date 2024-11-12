@@ -3,6 +3,7 @@ using ShoppingCart.Entities.ShoppingRules;
 
 namespace Tests.Entities;
 
+[TestFixture]
 public class SameOfMultipleProductShoppingRuleTests
 {
     private readonly Product[] _products =

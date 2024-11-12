@@ -23,7 +23,6 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, float s
             return false;
         }
         
-        // todo-at: need to cater for multiples, for example with rule for 3 of sku
         // - 2 matches: no match
         // - 3, or 4 matches: offer x 1
         // - 6, or 8 matches: offer x 2
