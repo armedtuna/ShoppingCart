@@ -1,6 +1,35 @@
-@ShoppingCart_HostAddress = http://localhost:5044
+@ShoppingCart_HostAddress = http://localhost:5044/shoppingcart
 
-GET {{ShoppingCart_HostAddress}}/weatherforecast/
+GET {{ShoppingCart_HostAddress}}/cart/
 Accept: application/json
+
+###
+
+GET {{ShoppingCart_HostAddress}}/products/
+Accept: application/json
+
+###
+
+POST {{ShoppingCart_HostAddress}}/scan/
+Accept: application/json
+
+{
+    "sku": "A",
+    "unitPrice": 50,
+    "specialPriceName": null,
+    "specialPrice": null
+}
+
+###
+
+POST {{ShoppingCart_HostAddress}}/scan/
+Accept: application/json
+
+{
+    "sku": "A",
+    "unitPrice": 50,
+    "specialPriceName": null,
+    "specialPrice": 11
+}
 
 ###

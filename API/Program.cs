@@ -18,7 +18,7 @@ app.UseCors(policyBuilder =>
         // todo-at: move to appsettings? hard-coded, say only GET and POST?
         .AllowAnyMethod()
         // todo-at: move to appsettings
-        .WithOrigins("http://localhost:3000");
+        .WithOrigins("http://localhost:5044");
 });
 
 // Configure the HTTP request pipeline.
@@ -52,9 +52,9 @@ void SetUpRoutes(WebApplication webApplication)
         .WithName("GetProducts")
         .WithOpenApi();
 
-    webApplication.MapPost($"{webRoot}/addtocart",
-        void (Product product) =>
-            CheckoutModel.Instance.AddProduct(product))
+    webApplication.MapPost($"{webRoot}/scan",
+        ScanResult (Product product) =>
+            CheckoutModel.Instance.Scan(product))
         .WithName("PostAddProductToCart")
         .WithOpenApi();
 }
