@@ -35,7 +35,6 @@ SetUpRoutes(app);
 app.Run();
 return;
 
-// todo-at: rip out the loyalty rule bit and leave that on another branch
 void SetUpRoutes(WebApplication webApplication)
 {
     const string webRoot = "/shoppingcart";
@@ -52,6 +51,7 @@ void SetUpRoutes(WebApplication webApplication)
         .WithName("GetProducts")
         .WithOpenApi();
 
+    // todo-at: no quantity, so should the caller just scan many times?
     webApplication.MapPost($"{webRoot}/scan",
         ScanResult (Product product) =>
             CheckoutModel.Instance.Scan(product))
