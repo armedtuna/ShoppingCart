@@ -18,6 +18,7 @@ public class ExampleCheckout
     public static Checkout BuildSameOfMultipleProduct() =>
         Build(BuildSameOfMultipleShoppingRules());
 
+    // should be some interesting results, if the discount rule is applied first? :)
     public static Checkout BuildComplex() =>
         Build(
         [
