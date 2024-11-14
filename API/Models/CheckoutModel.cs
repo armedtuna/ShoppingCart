@@ -15,8 +15,11 @@ public class CheckoutModel()
     public Checkout GetCart() =>
         Checkout;
 
+    // todo-at: what should the response be so that HTTP code are returned appropriately?
     public ScanResult Scan(Product product)
     {
+        // HttpResponseMessage response = new HttpResponseMessage();
+        // response.Content = 
         AddToCartProductValidator addToCartProductValidator = new();
         ValidationResult validationResult = addToCartProductValidator.Validate(product);
         if (!validationResult.IsValid)
