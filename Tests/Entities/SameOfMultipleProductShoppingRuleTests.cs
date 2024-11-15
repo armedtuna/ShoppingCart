@@ -17,15 +17,13 @@ public class SameOfMultipleProductShoppingRuleTests
     [TestCase(180, "aaaa")]
     [TestCase(150, "aaaaa")]
     [TestCase(200, "aaaaaa")]
-
-     [TestCase(160, "aaab")]
-     [TestCase(175, "aaabb")]
-     [TestCase(190, "aaabbd")]
-     [TestCase(190, "dababa")]
-    
-    [TestCase(150, "aaaaa")]
-    [TestCase(200, "aaaaaa")]
     [TestCase(280, "aaaaaaaa")]
+
+    [TestCase(160, "aaab")]
+    [TestCase(175, "aaabb")]
+    [TestCase(190, "aaabbd")]
+    [TestCase(190, "dababa")]
+    
     public void TestTotals(decimal expectedTotalPrice, string skus)
     {
         Checkout checkout = new(_dataHelper.BuildRulesManager());
