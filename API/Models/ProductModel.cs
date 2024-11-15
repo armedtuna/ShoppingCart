@@ -8,7 +8,7 @@ public class ProductModel
     
     public Product[] RetrieveProducts()
     {
-        return Data.ExampleProducts.Build();
+        return Data.ExampleData.BuildProducts();
     }
 
     // todo-at: add product feature, and support save to JSON file?

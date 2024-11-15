@@ -11,11 +11,12 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, decimal
     // for the moment, assume that all rules can apply to a product more than once
     private bool Inclusive { get; set; } = true;
 
+    // todo-at: tests
     // todo-at: something about this design feels off / wrong
     // - should this receive normal products?
-    public bool IsApplicable(IEnumerable<CheckoutProduct> products)
+    public bool IsApplicable(IEnumerable<Product> products)
     {
-        CheckoutProduct[] matchingProducts = products
+        Product[] matchingProducts = products
             .Where(p => p.Sku == Sku)
             .ToArray();
 
@@ -31,6 +32,7 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, decimal
         return quantityToAdjust != 0;
     }
 
+    // todo-at: tests
     public void CalculateSpecialPrice(IEnumerable<CheckoutProduct> products)
     {
         CheckoutProduct[] matchingProducts = products

@@ -18,7 +18,7 @@ public interface IShoppingRule
     
     public int Quantity { get; }
 
-    bool IsApplicable(IEnumerable<CheckoutProduct> products);
+    bool IsApplicable(IEnumerable<Product> products);
 
     void CalculateSpecialPrice(IEnumerable<CheckoutProduct> products);
 }

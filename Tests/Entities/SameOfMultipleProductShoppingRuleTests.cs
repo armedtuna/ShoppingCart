@@ -28,7 +28,7 @@ public class SameOfMultipleProductShoppingRuleTests
     [TestCase(280, "aaaaaaaa")]
     public void TestTotals(decimal expectedTotalPrice, string skus)
     {
-        Checkout checkout = new(_dataHelper.GetShoppingRules());
+        Checkout checkout = new(_dataHelper.BuildRulesManager());
         foreach (char sku in skus)
         {
             Product matchingProduct = _dataHelper.GetProduct(sku);
@@ -42,7 +42,7 @@ public class SameOfMultipleProductShoppingRuleTests
     [Test]
     public void TestIncremental()
     {
-        Checkout checkout = new Checkout(_dataHelper.GetShoppingRules());
+        Checkout checkout = new Checkout(_dataHelper.BuildRulesManager());
         Assert.That(checkout.Products.Count, Is.EqualTo(0));
         Assert.That(checkout.TotalPrice, Is.EqualTo(0));
 

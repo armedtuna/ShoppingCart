@@ -12,4 +12,6 @@ public class CheckoutProduct(string sku, decimal price)
 
     public bool HasSpecialPrice =>
         SpecialPriceName != null;
+
+    public CheckoutProduct(Product product) : this(product.Sku, product.UnitPrice) { }
 }

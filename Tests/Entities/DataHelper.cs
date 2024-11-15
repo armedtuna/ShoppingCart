@@ -23,8 +23,8 @@ public class DataHelper
     public Product[] BuildProducts() =>
         _products;
 
-    public IShoppingRule[] GetShoppingRules() =>
-        _shoppingRules;
+    public RulesManager BuildRulesManager() =>
+        new RulesManager(_shoppingRules);
 
     public Product GetProduct(char sku) =>
         _products.First(p => p.Sku == sku.ToString());

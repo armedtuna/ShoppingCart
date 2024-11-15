@@ -6,11 +6,11 @@ namespace ShoppingCart.Models;
 
 public class CheckoutModel()
 {
-    private static readonly Checkout Checkout = Data.ExampleCheckout.Build();
+    private static readonly Checkout Checkout = Data.ExampleData.BuildCheckout();
     // todo-at: how are multiple users supported? out-of-scope for this project? probably
     public static readonly CheckoutModel Instance = new CheckoutModel();
     
-    private Product[] _products = Data.ExampleProducts.Build();
+    private Product[] _products = Data.ExampleData.BuildProducts();
 
     public Checkout GetCart() =>
         Checkout;
