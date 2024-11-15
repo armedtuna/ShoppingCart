@@ -8,7 +8,5 @@ public class AddToCartProductValidator : AbstractValidator<Product>
     {
         RuleFor(product => product.Sku).NotEmpty();
         RuleFor(product => product.UnitPrice).Empty();
-        RuleFor(product => product.SpecialPriceName).Empty();
-        RuleFor(product => product.SpecialPrice).Empty();
     }
 }

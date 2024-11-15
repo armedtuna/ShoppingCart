@@ -14,5 +14,11 @@ namespace ShoppingCart.Entities.ShoppingRules;
 // - today only if you buy two you get an even better price
 public interface IShoppingRule
 {
-    bool CalculateSpecialPrice(IEnumerable<Product> products);
+    public string Sku { get; }
+    
+    public int Quantity { get; }
+
+    bool IsApplicable(IEnumerable<CheckoutProduct> products);
+
+    void CalculateSpecialPrice(IEnumerable<CheckoutProduct> products);
 }

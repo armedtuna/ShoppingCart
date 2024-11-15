@@ -17,6 +17,7 @@ public class DataHelper
     [
         new SameOfMultipleProductShoppingRule("a", 3, 130),
         new SameOfMultipleProductShoppingRule("b", 2, 45),
+        new SameOfMultipleProductShoppingRule("a", 5, 150),
     ];
 
     public Product[] BuildProducts() =>

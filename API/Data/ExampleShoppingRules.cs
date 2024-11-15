@@ -9,7 +9,8 @@ public class ExampleShoppingRules
         return
         [
             new SameOfMultipleProductShoppingRule("A", 3, 130),
-            new SameOfMultipleProductShoppingRule("B", 2, 45)
+            new SameOfMultipleProductShoppingRule("B", 2, 45),
+            new SameOfMultipleProductShoppingRule("A", 5, 150)
         ];
     }
 }

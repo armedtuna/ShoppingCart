@@ -51,6 +51,13 @@ void SetUpRoutes(WebApplication webApplication)
         .WithName("GetProducts")
         .WithOpenApi();
 
+    // todo-at: complete to support adding new product
+    // webApplication.MapPost($"{webRoot}/products",
+    //         bool () =>
+    //             ProductModel.Instance.RetrieveProducts())
+    //     .WithName("GetProducts")
+    //     .WithOpenApi();
+
     // todo-at: no quantity, so should the caller just scan many times?
     webApplication.MapPost($"{webRoot}/scan",
         ScanResult (Product product) =>

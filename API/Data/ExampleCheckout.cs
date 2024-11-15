@@ -29,6 +29,7 @@ public class ExampleCheckout
     private static IShoppingRule[] BuildSameOfMultipleShoppingRules() =>
     [
         new SameOfMultipleProductShoppingRule("A", 3, 130),
-        new SameOfMultipleProductShoppingRule("B", 2, 45)
+        new SameOfMultipleProductShoppingRule("B", 2, 45),
+        new SameOfMultipleProductShoppingRule("C", 6, 100),
     ];
 }

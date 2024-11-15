@@ -15,31 +15,42 @@ public class Checkout(IEnumerable<IShoppingRule>? shoppingRules)
 
     public void Scan(Product product)
     {
-        // don't re-use the existing product, but create a new one since the special price is adjusted by the rule
-        // on the product, and the object instances have to be unique.
-        Product productCopy = product.Clone();
-        Products.Add(productCopy);
-        foreach (IShoppingRule rule in ShoppingRules)
+        Products.Add(product);
+        
+        List<CheckoutProduct> checkoutProducts = new();
+        foreach (Product p in Products)
         {
-            bool ruleIsSatisfied = rule.CalculateSpecialPrice(Products);
+            CheckoutProduct cp = new(p.Sku, p.UnitPrice);
+            checkoutProducts.Add(cp);
         }
         
-        CalculateTotalPrice();
+        List<IShoppingRule> matchingRules = new();
+        // todo-at: should a "rule manager" class be extracted here?
+        foreach (IShoppingRule rule in ShoppingRules)
+        {
+            bool isApplicable = rule.IsApplicable(checkoutProducts);
+            if (isApplicable)
+            {
+                matchingRules.Add(rule);
+            }
+        }
+
+        // todo-at: this should be descending order -- how to test all this? seems like an extract class might be helpful?
+        matchingRules.Sort((rule1, rule2) => rule2.Quantity.CompareTo(rule1.Quantity));
+        foreach (IShoppingRule shoppingRule in matchingRules)
+        {
+            shoppingRule.CalculateSpecialPrice(checkoutProducts);
+        }
+        
+        CalculateTotalPrice(checkoutProducts);
     }
 
-    private void CalculateTotalPrice()
+    private void CalculateTotalPrice(IEnumerable<CheckoutProduct> products)
     {
         decimal totalPrice = 0;
-        foreach (Product product in Products)
+        foreach (CheckoutProduct product in products)
         {
-            if (product.SpecialPrice.HasValue)
-            {
-                totalPrice += product.SpecialPrice.Value;
-            }
-            else
-            {
-                totalPrice += product.UnitPrice;
-            }
+            totalPrice += product.Price;
         }
         
         TotalPrice = decimal.Round(totalPrice, 2);
