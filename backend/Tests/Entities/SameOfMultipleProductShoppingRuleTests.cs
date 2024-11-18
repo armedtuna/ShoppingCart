@@ -33,7 +33,7 @@ public class SameOfMultipleProductShoppingRuleTests
             checkout.Scan(matchingProduct);
         }
         
-        Assert.That(checkout.Products.Count, Is.EqualTo(skus.Length));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(skus.Length));
         Assert.That(checkout.TotalPrice, Is.EqualTo(expectedTotalPrice));
     }
 
@@ -41,27 +41,27 @@ public class SameOfMultipleProductShoppingRuleTests
     public void TestIncremental()
     {
         Checkout checkout = new Checkout(_dataHelper.BuildRulesManager());
-        Assert.That(checkout.Products.Count, Is.EqualTo(0));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(0));
         Assert.That(checkout.TotalPrice, Is.EqualTo(0));
 
         checkout.Scan(_dataHelper.GetProduct('a'));
-        Assert.That(checkout.Products.Count, Is.EqualTo(1));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(1));
         Assert.That(checkout.TotalPrice, Is.EqualTo(50));
 
         checkout.Scan(_dataHelper.GetProduct('b'));
-        Assert.That(checkout.Products.Count, Is.EqualTo(2));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(2));
         Assert.That(checkout.TotalPrice, Is.EqualTo(80));
 
         checkout.Scan(_dataHelper.GetProduct('a'));
-        Assert.That(checkout.Products.Count, Is.EqualTo(3));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(3));
         Assert.That(checkout.TotalPrice, Is.EqualTo(130));
 
         checkout.Scan(_dataHelper.GetProduct('a'));
-        Assert.That(checkout.Products.Count, Is.EqualTo(4));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(4));
         Assert.That(checkout.TotalPrice, Is.EqualTo(160));
 
         checkout.Scan(_dataHelper.GetProduct('b'));
-        Assert.That(checkout.Products.Count, Is.EqualTo(5));
+        Assert.That(checkout.GetProducts().Count, Is.EqualTo(5));
         Assert.That(checkout.TotalPrice, Is.EqualTo(175));
     }
 }

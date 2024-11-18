@@ -7,11 +7,13 @@ public class CheckoutProduct(string sku, decimal price)
 
     public decimal Price { get; set; } = price;
 
-    // todo-at: keep or remove or evolve -- for now it's for debug purposes
+    // todo-at: extract the two special fields into their own class?
+    // todo-at: keep as-is or evolve?
     public string? SpecialPriceName { get; set; } = null;
 
     public bool HasSpecialPrice =>
         SpecialPriceName != null;
 
-    public CheckoutProduct(Product product) : this(product.Sku, product.UnitPrice) { }
+    public CheckoutProduct(Product product)
+        : this(product.Sku, product.UnitPrice) { }
 }

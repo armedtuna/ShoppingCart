@@ -9,6 +9,7 @@ builder.Services.AddCors();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 
@@ -60,8 +61,9 @@ void SetUpRoutes(WebApplication webApplication)
 
     // todo-at: no quantity, so should the caller just scan many times?
     webApplication.MapPost($"{webRoot}/scan",
-        ScanResult (Product product) =>
-            CheckoutModel.Instance.Scan(product))
+            // todo-at: should /scan return the same result as /cart
+            IResult (ScanProduct scanProduct) =>
+                CheckoutModel.Instance.Scan(scanProduct))
         .WithName("PostAddProductToCart")
         .WithOpenApi();
 }
