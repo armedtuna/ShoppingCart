@@ -6,6 +6,8 @@ public class Checkout(RulesManager rulesManager)
 {
     private readonly List<Product> _products = [];
 
+    public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
+
     public decimal TotalPrice { get; private set; } = 0;
 
     public void Scan(Product product)
@@ -25,7 +27,4 @@ public class Checkout(RulesManager rulesManager)
         
         TotalPrice = decimal.Round(totalPrice, 2);
     }
-
-    public Product[] GetProducts() =>
-        _products.ToArray();
 }
