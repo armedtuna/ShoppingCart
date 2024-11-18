@@ -61,7 +61,6 @@ void SetUpRoutes(WebApplication webApplication)
 
     // todo-at: no quantity, so should the caller just scan many times?
     webApplication.MapPost($"{webRoot}/scan",
-            // todo-at: should /scan return the same result as /cart
             IResult (ScanProduct scanProduct) =>
                 CheckoutModel.Instance.Scan(scanProduct))
         .WithName("PostAddProductToCart")
