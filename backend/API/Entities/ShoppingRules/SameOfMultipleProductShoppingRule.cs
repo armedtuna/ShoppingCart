@@ -60,11 +60,11 @@ public class SameOfMultipleProductShoppingRule(string sku, int quantity, decimal
             matchingProduct.SpecialPriceName = GetType().ToString(); // todo-at: replace or append?
             if (i % Quantity == 0)
             {
-                matchingProduct.Price = SpecialPrice;
+                matchingProduct.SpecialPrice = SpecialPrice;
             }
             else
             {
-                matchingProduct.Price = 0;
+                matchingProduct.SpecialPrice = 0;
             }
         }
     }

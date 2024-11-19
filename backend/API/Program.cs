@@ -19,7 +19,7 @@ app.UseCors(policyBuilder =>
         // todo-at: move to appsettings? hard-coded, say only GET and POST?
         .AllowAnyMethod()
         // todo-at: move to appsettings
-        .WithOrigins("http://localhost:5044");
+        .WithOrigins("http://localhost:3001");
 });
 
 // Configure the HTTP request pipeline.

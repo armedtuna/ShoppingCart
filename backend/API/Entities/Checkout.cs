@@ -22,7 +22,14 @@ public class Checkout(RulesManager rulesManager)
         decimal totalPrice = 0;
         foreach (CheckoutProduct product in products)
         {
-            totalPrice += product.Price;
+            if (product.SpecialPrice.HasValue)
+            {
+                totalPrice += product.SpecialPrice.Value;
+            }
+            else
+            {
+                totalPrice += product.Price;
+            }
         }
         
         TotalPrice = decimal.Round(totalPrice, 2);

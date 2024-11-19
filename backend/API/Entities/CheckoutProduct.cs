@@ -7,6 +7,8 @@ public class CheckoutProduct(string sku, decimal price)
 
     public decimal Price { get; set; } = price;
 
+    public decimal? SpecialPrice { get; set; } = null;
+
     // todo-at: extract the two special fields into their own class?
     // todo-at: keep as-is or evolve?
     public string? SpecialPriceName { get; set; } = null;
