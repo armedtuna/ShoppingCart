@@ -36,7 +36,7 @@ function HomeComponent() {
     return (
     <div className="p-2">
         <Cart checkout={checkout} />
-        
+        <hr />
         <Products products={products} onScan={() => refreshCheckout()} />
     </div>
   )

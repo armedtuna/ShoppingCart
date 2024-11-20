@@ -5,7 +5,7 @@ export default class CheckoutProduct {
 
     constructor(sku: string, unitPrice: number, specialPrice?: number) {
         this.sku = sku
-        this.unitPrice = price
+        this.unitPrice = unitPrice
         this.specialPrice = specialPrice
     }
 }
