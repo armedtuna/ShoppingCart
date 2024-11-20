@@ -1,11 +1,11 @@
 namespace ShoppingCart.Entities;
 
-public class CheckoutProduct(string sku, decimal price)
+public class CheckoutProduct(string sku, decimal unitPrice)
 {
     // todo-at: should this just hold a copy of the product entity?
     public string Sku { get; } = sku;
 
-    public decimal Price { get; set; } = price;
+    public decimal UnitPrice { get; set; } = unitPrice;
 
     public decimal? SpecialPrice { get; set; } = null;
 

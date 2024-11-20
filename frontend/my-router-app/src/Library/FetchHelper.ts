@@ -36,3 +36,23 @@ export function postJson<ReturnType>(url: string, body: any, onPosted: (data: Re
             console.log(err.message)
         })
 }
+
+export function deleteJson<ReturnType>(url: string, onDeleted: (data: ReturnType) => void) {
+    const options = {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+    }
+    fetch(url, options)
+        .then((response) => {
+            const contentType = response.headers.get("content-type")
+            if (contentType?.indexOf("application/json")) {
+                return response.json()
+            }
+        })
+        .then((data) =>
+            onDeleted(data)
+        )
+        .catch((err) => {
+            console.log(err.message)
+        })
+}

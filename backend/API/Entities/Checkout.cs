@@ -5,8 +5,9 @@ namespace ShoppingCart.Entities;
 public class Checkout(RulesManager rulesManager)
 {
     private readonly List<Product> _products = [];
+    private CheckoutProduct[] _checkoutProducts = [];
 
-    public IReadOnlyCollection<Product> Products => _products.AsReadOnly();
+    public IReadOnlyCollection<CheckoutProduct> CheckoutProducts => _checkoutProducts.AsReadOnly();
 
     public decimal TotalPrice { get; private set; } = 0;
     public decimal SpecialTotalPrice { get; private set; } = 0;
@@ -14,8 +15,26 @@ public class Checkout(RulesManager rulesManager)
     public void Scan(Product product)
     {
         _products.Add(product);
-        CheckoutProduct[] checkoutProducts = rulesManager.ApplyShoppingRules(_products);
-        CalculateTotalPrice(checkoutProducts);
+        CalculateTotals();
+    }
+
+    private void CalculateTotals()
+    {
+        _checkoutProducts = rulesManager.ApplyShoppingRules(_products);
+        CalculateTotalPrice(_checkoutProducts);
+    }
+
+    public bool Delete(string sku)
+    {
+        Product? product = _products.FirstOrDefault(p => p.Sku == sku);
+        if (product == null)
+        {
+            return false;
+        }
+        
+        _products.Remove(product);
+        CalculateTotals();
+        return true;
     }
 
     private void CalculateTotalPrice(IEnumerable<CheckoutProduct> products)
@@ -24,14 +43,14 @@ public class Checkout(RulesManager rulesManager)
         decimal specialTotalPrice = 0;
         foreach (CheckoutProduct product in products)
         {
-            totalPrice += product.Price;
+            totalPrice += product.UnitPrice;
             if (product.SpecialPrice.HasValue)
             {
                 specialTotalPrice += product.SpecialPrice.Value;
             }
             else
             {
-                specialTotalPrice += product.Price;
+                specialTotalPrice += product.UnitPrice;
             }
         }
         

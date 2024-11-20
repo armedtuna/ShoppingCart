@@ -26,8 +26,21 @@ public class CheckoutModel()
         return Results.Ok();
     }
 
+    public IResult Delete(string sku)
+    {
+        if (!Checkout.Delete(sku))
+        {
+            return ProductNotFound(sku);
+        }
+
+        return Results.Ok();
+    }
+
     private static IResult ProductNotFound(ScanProduct scanProduct) =>
-        Results.NotFound($"SKU '{scanProduct.Sku}' not found.");
+        ProductNotFound(scanProduct.Sku);
+
+    private static IResult ProductNotFound(string sku) =>
+        Results.NotFound($"SKU '{sku}' not found.");
 
     private static IResult InvalidScanProduct(ValidationResult validationResult)
     {

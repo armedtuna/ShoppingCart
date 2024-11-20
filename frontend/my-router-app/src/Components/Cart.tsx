@@ -4,13 +4,18 @@ import { createColumnHelper, flexRender, getCoreRowModel, useReactTable } from '
 import CheckoutProduct from "../Entities/CheckoutProduct";
 
 import './cart.css'
+import {deleteJson} from "../Library/FetchHelper";
+import dataUrls from "../Library/DataUrls";
+import ScanProduct from "../Entities/ScanProduct";
 
 type CartProps = {
-    checkout?: Checkout
+    checkout?: Checkout,
+    onRemove?: () => void
 }
 
 export default function Cart({
-        checkout
+        checkout,
+        onRemove
     }: CartProps) {
     const columnHelper = createColumnHelper<CheckoutProduct>()
     const columns = [
@@ -28,13 +33,33 @@ export default function Cart({
         }),
         columnHelper.accessor(row => row.specialPrice, {
             id: 'specialPrice',
-            cell: info => info.getValue(),
+            cell: (info) => {
+                const specialPrice = info.getValue()
+                return specialPrice
+                    ? specialPrice
+                    : null
+            },
             header: () => <span>Special Price</span>,
             footer: () => <span>{checkout?.specialTotalPrice}</span>,
+        }),
+        columnHelper.accessor(row => row.sku, {
+            id: 'deleteSku',
+            cell: info =>
+                <a onClick={() => removeCartSku(info.getValue())}>Remove</a>,
         })
     ]
-    const data = checkout?.products ?? []
+    const data = checkout?.checkoutProducts ?? []
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() })
+
+    const removeCartSku = (sku: string) => {
+        const scanProduct = new ScanProduct(sku)
+        deleteJson<void>(dataUrls.remove(sku),
+            () => {
+                if (onRemove) {
+                    onRemove()
+                }
+            })
+    }
 
     return (
         <>

@@ -65,4 +65,10 @@ void SetUpRoutes(WebApplication webApplication)
                 CheckoutModel.Instance.Scan(scanProduct))
         .WithName("PostAddProductToCart")
         .WithOpenApi();
+
+    webApplication.MapDelete($"{webRoot}/remove/{{sku}}",
+            IResult (string sku) =>
+                CheckoutModel.Instance.Delete(sku))
+        .WithName("DeleteRemoveProductFromCart")
+        .WithOpenApi();
 }
